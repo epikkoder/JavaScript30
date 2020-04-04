@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Sort Without Articles</title>
 </head>
+
 <body>
 
   <style>
@@ -26,10 +28,12 @@
       padding: 0;
       box-shadow: 0 0 0 20px rgba(0, 0, 0, 0.05);
     }
+
     #bands li {
       border-bottom: 1px solid #efefef;
       padding: 20px;
     }
+
     #bands li:last-child {
       border-bottom: 0;
     }
@@ -38,16 +42,54 @@
       color: #ffc600;
       text-decoration: none;
     }
-
   </style>
 
   <ul id="bands"></ul>
 
-<script>
-const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+  <script>
+    const bands = ['The Plot in You', 'The Devil Wears Prada', 'Pierce the Veil', 'Norma Jean', 'The Bled', 'Say Anything', 'The Midway State', 'We Came as Romans', 'Counterparts', 'Oh, Sleeper', 'A Skylit Drive', 'Anywhere But Here', 'An Old Dog'];
+    const bandsList = document.getElementById("bands");
+    let bandsCopy = [];
 
+    bands.forEach((band, i) => {
+      if (band.includes("The ")) {
+        bandsCopy.push({
+          "index": i,
+          "article": "The ",
+          "value": band.substring(4)
+        });
+      }
+      else if (band.includes("A ")) {
+        bandsCopy.push({
+          "index": i,
+          "article": "A ",
+          "value": band.substring(2)
+        });
+      }
+      else if (band.includes("An ")) {
+        bandsCopy.push({
+          "index": i,
+          "article": "An ",
+          "value": band.substring(3)
+        });
+      }
+      else {
+        bandsCopy.push({
+          "index": i,
+          "article": "",
+          "value": band
+        });
+      }
+    });
 
-</script>
+    bandsCopy.sort((a, b) => a.value > b.value);
 
+    bandsCopy.forEach(band => {
+      const li = document.createElement("li");
+
+      li.textContent = band.article + band.value;
+      bandsList.append(li);
+    });
+  </script>
 </body>
 </html>
